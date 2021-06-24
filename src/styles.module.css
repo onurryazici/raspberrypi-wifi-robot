@@ -1,0 +1,107 @@
+body{
+    padding:0;
+    margin:0;
+}
+#container{
+    position: absolute;
+    background: black;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
+#carControlStage{
+    width: 310px;
+    height: calc(100% - 30px);
+    background-color: #111111;
+    margin-right: 25px;
+    display: flex;
+    flex-direction: column;
+}
+#carControlInner{
+    width: 180px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50%;
+}
+#cameraControlInner{
+    width: 180px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 50%;
+}
+#camera{
+    width:860px;
+    height: 500px;
+    background-color: aliceblue;
+    border: solid 5px green;
+}
+#cameraControlStage{
+    margin-left: 25px;
+    width: 310px;
+    height: calc(100% - 30px);
+    background-color: #111111;
+    margin-right: 25px;
+    display: flex;
+    flex-direction: column;
+}
+.buttons{
+    width: 60px;
+    height: 60px;
+    border: solid thin green ;
+    color: green;
+    background: transparent;
+}
+.flexRow{
+    display: flex;
+    flex-direction: row;
+}
+
+.greenText {
+    color:green;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 25px;
+    margin-top: 50px;
+}
+.pressing{
+    background-color: green;
+}
+#livebar{
+    position: absolute;
+    right: 15px;
+    width: 100%;
+    text-align: right;
+    font-weight: bold;
+    font-size: 20px;
+}
+.logBox{
+    width: 100%;
+    height: 170px;
+    margin-top: 10px;
+    background-color: black;
+    color: green;
+    font-size: 13px;
+    padding: 5px;
+    border: none;
+    border-top: solid 10px green;
+}
+
+#scrollbarStyle::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	background-color: #5a5a5a;
+}
+
+#scrollbarStyle::-webkit-scrollbar
+{
+	width: 3px;
+	background-color: #F5F5F5;
+}
+
+#scrollbarStyle::-webkit-scrollbar-thumb
+{
+	background-color: green;
+	border: 2px solid green;
+}
