@@ -3,21 +3,21 @@ import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
 import io from 'socket.io-client'
 import styles from '../styles.module.css'
+import MySocket from '../socket'
 
 export default class CarControlUnit extends Component {
     constructor(...args){
         super(...args)
-        this.socket = io()
     }
     componentDidUpdate(prevProps){
         if(prevProps.w !== this.props.w)
-            this.socket.emit("car","forward")
+            MySocket.emit("car","forward")
         else if(prevProps.a !== this.props.a)
-            this.socket.emit("car","left")
+            MySocket.emit("car","left")
         else if(prevProps.s !== this.props.s)
-            this.socket.emit("car","backward")
+            MySocket.emit("car","backward")
         else if(prevProps.d !== this.props.d)
-            this.socket.emit("car","right")
+            MySocket.emit("car","right")
     }
     render() {
         let w_pressed = this.props.w

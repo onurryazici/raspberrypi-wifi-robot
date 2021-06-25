@@ -1,24 +1,23 @@
 import classNames from 'classnames'
 import React, { Component } from 'react'
 import { Button } from 'react-bootstrap'
-import { io } from 'socket.io-client'
 import styles from '../styles.module.css'
-
+import MySocket from '../socket'
 export default class CameraControlUnit extends Component {
     constructor(...args){
         super(...args)
-        this.socket = io()
+        //this.socket = io("http://localhost:8888", { autoConnect:false, query: { token : "tester"}})
     }
 
     componentDidUpdate(prevProps){
         if(prevProps.up !== this.props.up)
-            this.socket.emit("camera","up")
+            MySocket.emit("camera","up")
         else if(prevProps.down !== this.props.down)
-            this.socket.emit("camera","down")
+            MySocket.emit("camera","down")
         else if(prevProps.left !== this.props.left)
-            this.socket.emit("camera","left")
+            MySocket.emit("camera","left")
         else if(prevProps.right !== this.props.right)
-            this.socket.emit("camera","right")
+            MySocket.emit("camera","right")
     }
 
     render() {

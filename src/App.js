@@ -3,6 +3,7 @@ import { Col, Row } from 'react-bootstrap'
 import { FaCircle} from 'react-icons/fa'
 import CarControlUnit from './components/carControlUnit'
 import CameraControlUnit from './components/cameraControlUnit'
+import MySocket from './socket'
 import LogUnit from './components/logUnit'
 import styles from './styles.module.css'
 import 'bootstrap/dist/css/bootstrap.min.css'
@@ -29,6 +30,9 @@ class App extends Component {
 	componentDidMount(){
 		document.addEventListener("keydown", this._onKeyDown)
 		document.addEventListener("keyup", this._onKeyUp)
+        const loggedUser = "random"
+        MySocket.auth = { loggedUser }
+        MySocket.connect()
 	}
 
 	_onKeyDown(event){
