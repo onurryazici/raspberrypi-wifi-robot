@@ -38,9 +38,48 @@ gpiop.setup(Motor4B, gpio.DIR_OUT)
 
 io.on('connection', (socket)=>{
     socket.on('car',(direction)=>{
-        console.log("car DIRECTION " + direction)
-        socket.to("random").emit("carrrr")
-
+        switch(direction){
+            case "forward":
+                gpio.write(Motor1A, true)
+                gpio.write(Motor1B, false)
+                gpio.write(Motor2A, true)
+                gpio.write(Motor2B, false)
+                gpio.write(Motor3A, true)
+                gpio.write(Motor3B, false)
+                gpio.write(Motor4A, true)
+                gpio.write(Motor4B, false)
+                break
+            case "backward":
+                gpio.write(Motor1A, false)
+                gpio.write(Motor1B, true)
+                gpio.write(Motor2A, false)
+                gpio.write(Motor2B, true)
+                gpio.write(Motor3A, false)
+                gpio.write(Motor3B, true)
+                gpio.write(Motor4A, false)
+                gpio.write(Motor4B, true)
+                break
+            case "left":
+                gpio.write(Motor1A, false)
+                gpio.write(Motor1B, true)
+                gpio.write(Motor2A, false)
+                gpio.write(Motor2B, true)
+                gpio.write(Motor3A, true)
+                gpio.write(Motor3B, false)
+                gpio.write(Motor4A, true)
+                gpio.write(Motor4B, false)
+                break
+            case "right":
+                gpio.write(Motor1A, true)
+                gpio.write(Motor1B, false)
+                gpio.write(Motor2A, true)
+                gpio.write(Motor2B, false)
+                gpio.write(Motor3A, false)
+                gpio.write(Motor3B, true)
+                gpio.write(Motor4A, false)
+                gpio.write(Motor4B, true)
+                break
+        }
     })
     socket.on('camera',(direction)=>{
         console.log("camera DIRECTION " + direction)

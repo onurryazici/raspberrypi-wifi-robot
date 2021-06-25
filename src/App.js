@@ -1,4 +1,4 @@
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import { FaCircle} from 'react-icons/fa'
 import CarControlUnit from './components/carControlUnit'
