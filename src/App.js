@@ -1,13 +1,29 @@
 import React, { Component } from 'react'
-import { Col, Row } from 'react-bootstrap'
-import { FaCircle} from 'react-icons/fa'
+import { Grid, Paper, Box } from '@material-ui/core'
 import CarControlUnit from './components/carControlUnit'
 import CameraControlUnit from './components/cameraControlUnit'
 import MySocket from './socket'
 import LogUnit from './components/logUnit'
 import styles from './styles.module.css'
-import 'bootstrap/dist/css/bootstrap.min.css'
+import { withStyles } from "@material-ui/core/styles"
+import { FiberManualRecord } from '@material-ui/icons/'
 import './App.css'
+
+const useStyles = ((theme) => ({
+    root: {
+        width:'calc(100% - 20px)',
+        flexGrow: 1,
+        height:'100%'
+    },
+    paper: {
+      padding: theme.spacing(2),
+      textAlign: 'center',
+      color: theme.palette.text.secondary,
+      background:'black',
+      height: '100%'
+    },
+  }));
+
 
 class App extends Component {
 
@@ -99,30 +115,43 @@ class App extends Component {
 				break
 		}
 	}
+    
 	render() {
+        
+        const {classes} = this.props;
 		return (
-			<div id={styles.container}>
-				<CarControlUnit 
-                    w = { this.state.goingForward }
-                    a = { this.state.goingLeft }
-                    s = { this.state.goingBackward }
-                    d = { this.state.goingRight } />
-                <Col>
-                    <Row>
-                        <div id={styles.camera}>
-                            <span id={styles.livebar}><FaCircle color="red" fontSize="15px"/> LIVE</span>
-                        </div>
-                    </Row>
-                    <Row><LogUnit/></Row>
-                </Col>
-				<CameraControlUnit
-                    up    = { this.state.cameraUp }
-                    down  = { this.state.cameraDown }
-                    left  = { this.state.cameraLeft }
-                    right = { this.state.cameraRight } />
-			</div>
+            <div id={styles.appContainer}>
+            <Grid container spacing={3} style={{height:'100%'}}>
+                <Grid item xs>
+                    <Paper className={classes.paper}>
+                        <CarControlUnit 
+                            w = { this.state.goingForward }
+                            a = { this.state.goingLeft }
+                            s = { this.state.goingBackward }
+                            d = { this.state.goingRight } />  
+                    </Paper>
+                </Grid>
+                <Grid item xs={6}>
+                    <Paper className={classes.paper}>
+                    <Box flexWrap="wrap">
+                        <div id={styles.camera}><span id={styles.livebar}><FiberManualRecord style={{fill:'red'}}/> LIVE</span></div>
+                        <LogUnit/>
+                    </Box>
+                    </Paper>
+                </Grid>
+                <Grid item xs>
+                <Paper className={classes.paper}>
+                    <CameraControlUnit
+                        up    = { this.state.cameraUp }
+                        down  = { this.state.cameraDown }
+                        left  = { this.state.cameraLeft }
+                        right = { this.state.cameraRight } />
+                </Paper>
+                </Grid>
+            </Grid>
+            </div>
 		)
 	}
 }
 
-export default App
+export default withStyles(useStyles)(App)

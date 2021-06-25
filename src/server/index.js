@@ -1,10 +1,10 @@
 const express = require('express');
-const http = require('http').Server(app);
 const app = express();
+const http = require('http').Server(app);
 const cors = require('cors')
 const io = require('socket.io')(http,{
     cors:{
-    origin:"http://localhost:3000", // BURAYA MESSENGER UI'nin çalıştığı ip:port gelecek
+    origin:["http://localhost:3000", "http://localhost:5000"], 
     methods:["GET","POST"],
     credentials:true
   }
@@ -14,9 +14,8 @@ app.use(cors())
 const gpio = require('rpi-gpio');
 const gpiop = gpio.promise;
 const webroot = __dirname + '/../../build';
-/*const socketIo    = require("socket.io");
-const cors        = require('cors')
-const io2 = socketIo()*/
+
+
 const Motor1A = 17
 const Motor1B = 27
 const Motor2A = 23

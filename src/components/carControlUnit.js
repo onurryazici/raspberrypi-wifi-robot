@@ -1,13 +1,13 @@
 import classNames from 'classnames'
 import React, { Component } from 'react'
-import { Button } from 'react-bootstrap'
 import io from 'socket.io-client'
 import styles from '../styles.module.css'
 import MySocket from '../socket'
-
+import { Button } from '@material-ui/core'
 export default class CarControlUnit extends Component {
     constructor(...args){
         super(...args)
+
     }
     componentDidUpdate(prevProps){
         if(prevProps.w !== this.props.w)
@@ -18,32 +18,46 @@ export default class CarControlUnit extends Component {
             MySocket.emit("car","backward")
         else if(prevProps.d !== this.props.d)
             MySocket.emit("car","right")
+
+        
     }
     render() {
-        let w_pressed = this.props.w
-        let a_pressed = this.props.a
-        let s_pressed = this.props.s
-        let d_pressed = this.props.d
-
-        let w_style = w_pressed ? classNames(styles.buttons, styles.pressing) : styles.buttons
-        let a_style = a_pressed ? classNames(styles.buttons, styles.pressing) : styles.buttons
-        let s_style = s_pressed ? classNames(styles.buttons, styles.pressing) : styles.buttons
-        let d_style = d_pressed ? classNames(styles.buttons, styles.pressing) : styles.buttons
-
-        let w_variant = w_pressed ? "success" : "outline-success"
-        let a_variant = a_pressed ? "success" : "outline-success"
-        let s_variant = s_pressed ? "success" : "outline-success"
-        let d_variant = d_pressed ? "success" : "outline-success"
+        const buttonStyles = {
+            pressedButtons: {
+                width: '60px',
+                height: '60px',
+                border: 'solid thin green',
+                color: 'black',
+                background: 'green'
+            },
+            unPressedButtons: {
+                width: '60px',
+                height: '60px',
+                border: 'solid thin green',
+                color: 'green',
+                background: 'transparent'
+            }
+        }
+        
+        let w_style = this.props.w ? buttonStyles.pressedButtons : buttonStyles.unPressedButtons
+        let a_style = this.props.a ? buttonStyles.pressedButtons : buttonStyles.unPressedButtons
+        let s_style = this.props.s ? buttonStyles.pressedButtons : buttonStyles.unPressedButtons
+        let d_style = this.props.d ? buttonStyles.pressedButtons : buttonStyles.unPressedButtons
+        
+        let w_variant = this.props.w ? "contained" : "contained"
+        let a_variant = this.props.a ? "contained" : "contained"
+        let s_variant = this.props.s ? "contained" : "contained"
+        let d_variant = this.props.d ? "contained" : "contained"
 
         return (
             <div id={styles.carControlStage}>
                 <div id={styles.carControlInner}>
-                    <Button variant={w_variant} className={w_style} style={{marginLeft:'60px'}}>W</Button>
+                    <Button variant={w_variant} style={w_style} >W</Button>
                     <div className={styles.flexRow}>
-                        <Button variant={a_variant} className={a_style} >A</Button>
-                        <Button variant={d_variant} className={d_style} style={{marginLeft:'60px'}}>D</Button>
+                        <Button variant={a_variant} style={a_style} >A</Button>
+                        <Button variant={d_variant} style={d_style} >D</Button>
                     </div>
-                    <Button variant={s_variant} className={s_style} style={{marginLeft:'60px'}}>S</Button>
+                    <Button variant={s_variant} style={s_style} >S</Button>
                 </div>
                 <span className={styles.greenText}>Car Control Unit</span>
             </div>
