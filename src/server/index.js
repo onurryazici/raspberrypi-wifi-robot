@@ -4,27 +4,27 @@ const http = require('http').Server(app);
 const cors = require('cors')
 const io = require('socket.io')(http,{
     cors:{
-    origin:["http://localhost:3000", "http://localhost:5000"], 
+    origin:"*", 
     methods:["GET","POST"],
     credentials:true
   }
 });
 
 app.use(cors())
-const gpio = require('rpi-gpio');
-const gpiop = gpio.promise;
+const Gpio = require('onoff').Gpio;
+
 const webroot = __dirname + '/../../build';
 
 
-const Motor1A = 17
-const Motor1B = 27
-const Motor2A = 23
-const Motor2B = 24
-const Motor3A = 16
-const Motor3B = 26
-const Motor4A = 5
-const Motor4B = 6
-
+const Motor1A = new Gpio(17,'out')
+const Motor1B = new Gpio(27,'out')
+const Motor2A = new Gpio(23,'out')
+const Motor2B = new Gpio(24,'out')
+const Motor3A = new Gpio(16,'out')
+const Motor3B = new Gpio(26,'out')
+const Motor4A = new Gpio(5,'out')
+const Motor4B = new Gpio(6,'out')
+/*
 gpiop.setup(Motor1A, gpio.DIR_OUT)
 gpiop.setup(Motor1B, gpio.DIR_OUT)
 gpiop.setup(Motor2A, gpio.DIR_OUT)
@@ -33,52 +33,53 @@ gpiop.setup(Motor3A, gpio.DIR_OUT)
 gpiop.setup(Motor3B, gpio.DIR_OUT)
 gpiop.setup(Motor4A, gpio.DIR_OUT)
 gpiop.setup(Motor4B, gpio.DIR_OUT)
-
+*/
 
 io.on('connection', (socket)=>{
     socket.on('car',(direction)=>{
         switch(direction){
             case "forward":
-                gpio.write(Motor1A, true)
-                gpio.write(Motor1B, false)
-                gpio.write(Motor2A, true)
-                gpio.write(Motor2B, false)
-                gpio.write(Motor3A, true)
-                gpio.write(Motor3B, false)
-                gpio.write(Motor4A, true)
-                gpio.write(Motor4B, false)
+                Motor1A.writeSync(1)
+                Motor1B.writeSync(0)
+                Motor2A.writeSync(1)
+                Motor2B.writeSync(0)
+                Motor3A.writeSync(1)
+                Motor3B.writeSync(0)
+                Motor4A.writeSync(1)
+                Motor4B.writeSync(0)
                 break
             case "backward":
-                gpio.write(Motor1A, false)
-                gpio.write(Motor1B, true)
-                gpio.write(Motor2A, false)
-                gpio.write(Motor2B, true)
-                gpio.write(Motor3A, false)
-                gpio.write(Motor3B, true)
-                gpio.write(Motor4A, false)
-                gpio.write(Motor4B, true)
+                Motor1A.writeSync(0)
+                Motor1B.writeSync(1)
+                Motor2A.writeSync(0)
+                Motor2B.writeSync(1)
+                Motor3A.writeSync(0)
+                Motor3B.writeSync(1)
+                Motor4A.writeSync(0)
+                Motor4B.writeSync(1)
                 break
             case "left":
-                gpio.write(Motor1A, false)
-                gpio.write(Motor1B, true)
-                gpio.write(Motor2A, false)
-                gpio.write(Motor2B, true)
-                gpio.write(Motor3A, true)
-                gpio.write(Motor3B, false)
-                gpio.write(Motor4A, true)
-                gpio.write(Motor4B, false)
+                Motor1A.writeSync(0)
+                Motor1B.writeSync(1)
+                Motor2A.writeSync(0)
+                Motor2B.writeSync(1)
+                Motor3A.writeSync(1)
+                Motor3B.writeSync(0)
+                Motor4A.writeSync(1)
+                Motor4B.writeSync(0)
                 break
             case "right":
-                gpio.write(Motor1A, true)
-                gpio.write(Motor1B, false)
-                gpio.write(Motor2A, true)
-                gpio.write(Motor2B, false)
-                gpio.write(Motor3A, false)
-                gpio.write(Motor3B, true)
-                gpio.write(Motor4A, false)
-                gpio.write(Motor4B, true)
+                Motor1A.writeSync(1)
+                Motor1B.writeSync(0)
+                Motor2A.writeSync(1)
+                Motor2B.writeSync(0)
+                Motor3A.writeSync(0)
+                Motor3B.writeSync(1)
+                Motor4A.writeSync(0)
+                Motor4B.writeSync(1)
                 break
         }
+        console.log("car control")
     })
     socket.on('camera',(direction)=>{
         console.log("camera DIRECTION " + direction)
