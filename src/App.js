@@ -128,7 +128,8 @@ class App extends Component {
                             w = { this.state.goingForward }
                             a = { this.state.goingLeft }
                             s = { this.state.goingBackward }
-                            d = { this.state.goingRight } />  
+                            d = { this.state.goingRight } 
+                            idle = {!this.state.goingForward && !this.state.goingLeft && !this.state.goingRight && !this.state.goingBackward}/>  
                     </Paper>
                 </Grid>
                 <Grid item xs={6}>

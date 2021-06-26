@@ -10,14 +10,15 @@ export default class CameraControlUnit extends Component {
     }
 
     componentDidUpdate(prevProps){
+        
         if(prevProps.up !== this.props.up)
-            MySocket.emit("camera","up")
+            MySocket.emit("camera","up",this.props.up)
         else if(prevProps.down !== this.props.down)
-            MySocket.emit("camera","down")
+            MySocket.emit("camera","down", this.props.down)
         else if(prevProps.left !== this.props.left)
-            MySocket.emit("camera","left")
+            MySocket.emit("camera","left",this.props.left)
         else if(prevProps.right !== this.props.right)
-            MySocket.emit("camera","right")
+            MySocket.emit("camera","right",this.props.right)
     }
 
     render() {

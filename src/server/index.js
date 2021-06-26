@@ -30,48 +30,57 @@ const Motor4B = new Gpio(6,'out')
 
 
 io.on('connection', (socket)=>{
-    socket.on('car',(direction)=>{
+    socket.on('car',(direction,signal)=>{
         switch(direction){
             case "forward":
-                Motor1A.writeSync(1)
-                Motor1B.writeSync(0)
-                Motor2A.writeSync(1)
-                Motor2B.writeSync(0)
-                Motor3A.writeSync(1)
-                Motor3B.writeSync(0)
-                Motor4A.writeSync(1)
-                Motor4B.writeSync(0)
+                Motor1A.writeSync(signal)
+                Motor1B.writeSync(!signal)
+                Motor2A.writeSync(signal)
+                Motor2B.writeSync(!signal)
+                Motor3A.writeSync(signal)
+                Motor3B.writeSync(!signal)
+                Motor4A.writeSync(signal)
+                Motor4B.writeSync(!signal)
                 break
             case "backward":
-                Motor1A.writeSync(0)
-                Motor1B.writeSync(1)
-                Motor2A.writeSync(0)
-                Motor2B.writeSync(1)
-                Motor3A.writeSync(0)
-                Motor3B.writeSync(1)
-                Motor4A.writeSync(0)
-                Motor4B.writeSync(1)
+                Motor1A.writeSync(!signal)
+                Motor1B.writeSync(signal)
+                Motor2A.writeSync(!signal)
+                Motor2B.writeSync(signal)
+                Motor3A.writeSync(!signal)
+                Motor3B.writeSync(signal)
+                Motor4A.writeSync(!signal)
+                Motor4B.writeSync(signal)
                 break
             case "left":
-                Motor1A.writeSync(0)
-                Motor1B.writeSync(1)
-                Motor2A.writeSync(0)
-                Motor2B.writeSync(1)
-                Motor3A.writeSync(1)
-                Motor3B.writeSync(0)
-                Motor4A.writeSync(1)
-                Motor4B.writeSync(0)
+                Motor1A.writeSync(!signal)
+                Motor1B.writeSync(signal)
+                Motor2A.writeSync(!signal)
+                Motor2B.writeSync(signal)
+                Motor3A.writeSync(signal)
+                Motor3B.writeSync(!signal)
+                Motor4A.writeSync(signal)
+                Motor4B.writeSync(!signal)
                 break
             case "right":
-                Motor1A.writeSync(1)
+                Motor1A.writeSync(signal)
+                Motor1B.writeSync(!signal)
+                Motor2A.writeSync(signal)
+                Motor2B.writeSync(!signal)
+                Motor3A.writeSync(!signal)
+                Motor3B.writeSync(signal)
+                Motor4A.writeSync(!signal)
+                Motor4B.writeSync(signal)
+                break
+            case "idle":
+                Motor1A.writeSync(0)
                 Motor1B.writeSync(0)
-                Motor2A.writeSync(1)
+                Motor2A.writeSync(0)
                 Motor2B.writeSync(0)
                 Motor3A.writeSync(0)
-                Motor3B.writeSync(1)
+                Motor3B.writeSync(0)
                 Motor4A.writeSync(0)
-                Motor4B.writeSync(1)
-                break
+                Motor4B.writeSync(0)
         }
         console.log("car control")
     })
