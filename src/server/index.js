@@ -29,8 +29,8 @@ const Motor3B = new Gpio(26, {mode: Gpio.OUTPUT})
 const Motor4A = new Gpio(5, {mode: Gpio.OUTPUT})
 const Motor4B = new Gpio(6, {mode: Gpio.OUTPUT})
 
-const ServoTopYellow = new Gpio(18,  {mode: Gpio.OUTPUT})
-const ServoBottomYellow = new Gpio(22,  {mode: Gpio.OUTPUT})
+const ServoTopYellow = new Gpio(1,  {modxe: Gpio.OUTPUT})
+const ServoBottomYellow = new Gpio(3,  {mode: Gpio.OUTPUT})
 
 io.on('connection', (socket)=>{
     socket.on("disconnect",()=>{
