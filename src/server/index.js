@@ -93,14 +93,21 @@ io.on('connection', (socket)=>{
     })
     socket.on('camera',(direction, active)=>{
         console.log("Direction " + direction+ "; Active : " + (active+"").toUpperCase())
+        let pulseWidth = ServoTopYellow.getServoPulseWidth()
         switch(direction){
             case "up":
-                let pulseWidth = 1000
-                let rand = Math.floor(Math.random() * 2000) + 1000
-                ServoTopYellow.servoWrite(rand)
+                var pulseWidth = ServoTopYellow.getServoPulseWidth()
+                if(pulseWidth <= 1000) {
+                    pulseWidth += 100
+                    ServoTopYellow.servoWrite(pulseWidth)
+                }
                 break
             case "down":
-                console.log("down camera")
+                var pulseWidth = ServoTopYellow.getServoPulseWidth()
+                if(pulseWidth >= 2000) {
+                    pulseWidth -= 100
+                    ServoTopYellow.servoWrite(pulseWidth)
+                }
                 break
             case "left":
                 console.log("left camera")
