@@ -93,6 +93,10 @@ io.on('connection', (socket)=>{
         }
     })
     socket.on('camera',(direction, active)=>{
+        console.log("ServoTop pwm range " + ServoTop.getPwmRange())
+        console.log("ServoTop pwm dutycycle " + ServoTop.getPwmDutyCycle())
+        console.log("ServoTop pwm real range " + ServoTop.getPwmRealRange())
+
         console.log("Direction " + direction+ "; Active : " + (active+"").toUpperCase())
         let pulseWidth = 1000;
         let increment = 100;
@@ -100,7 +104,7 @@ io.on('connection', (socket)=>{
             case "up":
                 setInterval(() => {
                     ServoTop.servoWrite(pulseWidth);
-                  
+                    
                     pulseWidth += increment;
                     if (pulseWidth >= 2000) {
                       increment = -100;
