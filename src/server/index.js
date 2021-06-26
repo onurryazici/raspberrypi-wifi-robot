@@ -31,6 +31,7 @@ const Motor4B = new Gpio(6,'out')
 
 io.on('connection', (socket)=>{
     socket.on('car',(direction)=>{
+        console.log("yön " + direction)
         switch(direction){
             case "forward":
                 Motor1A.writeSync(1)
