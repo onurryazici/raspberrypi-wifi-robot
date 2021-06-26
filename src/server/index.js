@@ -18,6 +18,7 @@ app.use(cors())
 const webroot = __dirname + '/../../build';
 
 const Gpio = require('pigpio').Gpio;
+const { ViewArrayOutlined } = require('@material-ui/icons');
 
 const Motor1A = new Gpio(17,{ mode:Gpio.OUTPUT})
 const Motor1B = new Gpio(27, {mode: Gpio.OUTPUT})
@@ -93,20 +94,20 @@ io.on('connection', (socket)=>{
     })
     socket.on('camera',(direction, active)=>{
         console.log("Direction " + direction+ "; Active : " + (active+"").toUpperCase())
-        let pulseWidth = ServoTopYellow.getServoPulseWidth()
+        var pulseWidth = ServoTopYellow.getServoPulseWidth()
         switch(direction){
             case "up":
-                var pulseWidth = ServoTopYellow.getServoPulseWidth()
+                var value = pulseWidth
                 if(pulseWidth <= 1000) {
-                    pulseWidth += 100
-                    ServoTopYellow.servoWrite(pulseWidth)
+                    value += 100
+                    ServoTopYellow.servoWrite(value)
                 }
                 break
             case "down":
-                var pulseWidth = ServoTopYellow.getServoPulseWidth()
+                var value = pulseWidth
                 if(pulseWidth >= 2000) {
-                    pulseWidth -= 100
-                    ServoTopYellow.servoWrite(pulseWidth)
+                    value -= 100
+                    ServoTopYellow.servoWrite(value)
                 }
                 break
             case "left":
