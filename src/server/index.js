@@ -99,7 +99,7 @@ io.on('connection', (socket)=>{
         switch(direction){
             case "up":
                 setInterval(() => {
-                    motor.servoWrite(pulseWidth);
+                    ServoTopYellow.servoWrite(pulseWidth);
                   
                     pulseWidth += increment;
                     if (pulseWidth >= 2000) {
@@ -110,11 +110,16 @@ io.on('connection', (socket)=>{
                   }, 1000);
                 break
             case "down":
-                var value = pulseWidth
-                if(pulseWidth >= 2000) {
-                    value -= 100
-                    ServoTopYellow.servoWrite(value)
-                }
+                setInterval(() => {
+                    ServoTopYellow.servoWrite(pulseWidth);
+                  
+                    pulseWidth -= increment;
+                    if (pulseWidth >= 2000) {
+                      increment = -100;
+                    } else if (pulseWidth <= 1000) {
+                      increment = 100;
+                    }
+                  }, 1000);
                 break
             case "left":
                 console.log("left camera")
