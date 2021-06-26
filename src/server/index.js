@@ -84,14 +84,16 @@ io.on('connection', (socket)=>{
                 Motor4B.writeSync(1)
                 break
             case "idle":
-                Motor1A.writeSync(0)
-                Motor1B.writeSync(0)
-                Motor2A.writeSync(0)
-                Motor2B.writeSync(0)
-                Motor3A.writeSync(0)
-                Motor3B.writeSync(0)
-                Motor4A.writeSync(0)
-                Motor4B.writeSync(0)
+                if(active){
+                    Motor1A.writeSync(0)
+                    Motor1B.writeSync(0)
+                    Motor2A.writeSync(0)
+                    Motor2B.writeSync(0)
+                    Motor3A.writeSync(0)
+                    Motor3B.writeSync(0)
+                    Motor4A.writeSync(0)
+                    Motor4B.writeSync(0)
+                }
         }
     })
     socket.on('camera',(direction)=>{
