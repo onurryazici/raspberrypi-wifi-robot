@@ -1,8 +1,10 @@
 const express = require('express');
 const app = express();
-const http = require('http').Server(app);
+const http = require('http')
+const server = http.createServer(app)
 const cors = require('cors')
-const io = require('socket.io')(http,{
+const socketIo = require('socket.io')
+const io = socketIo(server,{
     cors:{
     origin:"*", 
     methods:["GET","POST"],
@@ -14,7 +16,7 @@ app.use(cors())
 
 
 const webroot = __dirname + '/../../build';
-/*
+
 const Gpio = require('onoff').Gpio;
 
 const Motor1A = new Gpio(17,'out')
@@ -24,12 +26,12 @@ const Motor2B = new Gpio(24,'out')
 const Motor3A = new Gpio(16,'out')
 const Motor3B = new Gpio(26,'out')
 const Motor4A = new Gpio(5,'out')
-const Motor4B = new Gpio(6,'out')*/
+const Motor4B = new Gpio(6,'out')
 
 
 io.on('connection', (socket)=>{
     socket.on('car',(direction)=>{
-        /*switch(direction){
+        switch(direction){
             case "forward":
                 Motor1A.writeSync(1)
                 Motor1B.writeSync(0)
@@ -70,7 +72,7 @@ io.on('connection', (socket)=>{
                 Motor4A.writeSync(0)
                 Motor4B.writeSync(1)
                 break
-        }*/
+        }
         console.log("car control")
     })
     socket.on('camera',(direction)=>{
@@ -80,5 +82,5 @@ io.on('connection', (socket)=>{
 })
 
 
-http.listen(8080); //listen to port 8080
+server.listen(8080); //listen to port 8080
 app.use(express.static(webroot));
