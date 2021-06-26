@@ -10,6 +10,8 @@ export default class CarControlUnit extends Component {
 
     }
     componentDidUpdate(prevProps){
+        
+        
         if(prevProps.w !== this.props.w)
             MySocket.emit("car","forward",this.props.w)
         else if(prevProps.a !== this.props.a)
@@ -18,7 +20,8 @@ export default class CarControlUnit extends Component {
             MySocket.emit("car","backward",this.props.s)
         else if(prevProps.d !== this.props.d)
             MySocket.emit("car","right",this.props.d)
-        else if(prevProps.idle !== this.props.idle)
+
+        if(prevProps.idle !== this.props.idle)
             MySocket.emit("car","idle",this.props.idle)
     }
     render() {

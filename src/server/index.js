@@ -30,8 +30,18 @@ const Motor4B = new Gpio(6,'out')
 
 
 io.on('connection', (socket)=>{
-    socket.on('car',(direction)=>{
-        console.log("yön " + direction)
+    socket.on("disconnect",()=>{
+    Motor1A.unexport()
+    Motor1B.unexport()
+    Motor2A.unexport()
+    Motor2B.unexport()
+    Motor3A.unexport()
+    Motor3B.unexport()
+    Motor4A.unexport()
+    Motor4B.unexport()
+    })
+    socket.on('car',(direction, active)=>{
+        console.log("Direction " + direction+ "; Active : " + (active+"").toUpperCase())
         switch(direction){
             case "forward":
                 Motor1A.writeSync(1)
@@ -83,7 +93,6 @@ io.on('connection', (socket)=>{
                 Motor4A.writeSync(0)
                 Motor4B.writeSync(0)
         }
-        console.log("car control")
     })
     socket.on('camera',(direction)=>{
         console.log("camera DIRECTION " + direction)
