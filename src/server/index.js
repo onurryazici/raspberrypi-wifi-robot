@@ -29,8 +29,8 @@ const Motor3B = new Gpio(26, {mode: Gpio.OUTPUT})
 const Motor4A = new Gpio(5, {mode: Gpio.OUTPUT})
 const Motor4B = new Gpio(6, {mode: Gpio.OUTPUT})
 
-const ServoTopYellow = new Gpio(25,  {modxe: Gpio.OUTPUT})
-const ServoBottomYellow = new Gpio(22,  {mode: Gpio.OUTPUT})
+const ServoTopYellow = new Gpio(10,  {modxe: Gpio.OUTPUT})
+//const ServoBottomYellow = new Gpio(12,  {mode: Gpio.OUTPUT})
 
 io.on('connection', (socket)=>{
     socket.on("disconnect",()=>{
@@ -95,7 +95,7 @@ io.on('connection', (socket)=>{
     socket.on('camera',(direction, active)=>{
         console.log("Direction " + direction+ "; Active : " + (active+"").toUpperCase())
         var pulseWidth = ServoTopYellow.getServoPulseWidth()
-        console.log("Angle : " + ServoBottomYellow.getServoPulseWidth())
+        console.log("Top Angle : " + ServoTopYellow.getServoPulseWidth())
         switch(direction){
             case "up":
                 var value = pulseWidth
