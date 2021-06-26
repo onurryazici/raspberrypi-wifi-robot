@@ -94,16 +94,20 @@ io.on('connection', (socket)=>{
     })
     socket.on('camera',(direction, active)=>{
         console.log("Direction " + direction+ "; Active : " + (active+"").toUpperCase())
-        var pulseWidth = ServoTopYellow.getServoPulseWidth()
-        console.log("Top Angle : " + ServoTopYellow.getServoPulseWidth())
+        let pulseWidth = 1000;
+        let increment = 100;
         switch(direction){
             case "up":
-                var value = pulseWidth
-                
-                if(pulseWidth <= 1000) {
-                    value += 100
-                    ServoTopYellow.servoWrite(value)
-                }
+                setInterval(() => {
+                    motor.servoWrite(pulseWidth);
+                  
+                    pulseWidth += increment;
+                    if (pulseWidth >= 2000) {
+                      increment = -100;
+                    } else if (pulseWidth <= 1000) {
+                      increment = 100;
+                    }
+                  }, 1000);
                 break
             case "down":
                 var value = pulseWidth
