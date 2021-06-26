@@ -29,8 +29,8 @@ const Motor3B = new Gpio(26, {mode: Gpio.OUTPUT})
 const Motor4A = new Gpio(5, {mode: Gpio.OUTPUT})
 const Motor4B = new Gpio(6, {mode: Gpio.OUTPUT})
 
-const ServoTopYellow = new Gpio(10,  {modxe: Gpio.OUTPUT})
-//const ServoBottomYellow = new Gpio(12,  {mode: Gpio.OUTPUT})
+const ServoTop = new Gpio(10,  {modxe: Gpio.OUTPUT})
+const ServoBottom = new Gpio(9,  {mode: Gpio.OUTPUT})
 
 io.on('connection', (socket)=>{
     socket.on("disconnect",()=>{
@@ -99,7 +99,7 @@ io.on('connection', (socket)=>{
         switch(direction){
             case "up":
                 setInterval(() => {
-                    ServoTopYellow.servoWrite(pulseWidth);
+                    ServoTop.servoWrite(pulseWidth);
                   
                     pulseWidth += increment;
                     if (pulseWidth >= 2000) {
@@ -111,7 +111,7 @@ io.on('connection', (socket)=>{
                 break
             case "down":
                 setInterval(() => {
-                    ServoTopYellow.servoWrite(pulseWidth);
+                    ServoTop.servoWrite(pulseWidth);
                   
                     pulseWidth -= increment;
                     if (pulseWidth >= 2000) {
@@ -122,10 +122,28 @@ io.on('connection', (socket)=>{
                   }, 1000);
                 break
             case "left":
-                console.log("left camera")
+                setInterval(() => {
+                    ServoBottom.servoWrite(pulseWidth);
+                  
+                    pulseWidth += increment;
+                    if (pulseWidth >= 2000) {
+                      increment = -100;
+                    } else if (pulseWidth <= 1000) {
+                      increment = 100;
+                    }
+                  }, 1000);
                 break
             case "right":
-                console.log("right camera")
+                setInterval(() => {
+                    ServoBottom.servoWrite(pulseWidth);
+                  
+                    pulseWidth += increment;
+                    if (pulseWidth >= 2000) {
+                      increment = -100;
+                    } else if (pulseWidth <= 1000) {
+                      increment = 100;
+                    }
+                  }, 1000);
                 break
             case "idle":
                 if(active){
