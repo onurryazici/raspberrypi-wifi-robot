@@ -17,89 +17,103 @@ app.use(cors())
 
 const webroot = __dirname + '/../../build';
 
-const Gpio = require('onoff').Gpio;
+const Gpio = require('pigpio').Gpio;
 
-const Motor1A = new Gpio(17,'out')
-const Motor1B = new Gpio(27,'out')
-const Motor2A = new Gpio(23,'out')
-const Motor2B = new Gpio(24,'out')
-const Motor3A = new Gpio(16,'out')
-const Motor3B = new Gpio(26,'out')
-const Motor4A = new Gpio(5,'out')
-const Motor4B = new Gpio(6,'out')
+const Motor1A = new Gpio(17,{ mode:Gpio.OUTPUT})
+const Motor1B = new Gpio(27, {mode: Gpio.OUTPUT})
+const Motor2A = new Gpio(23, {mode: Gpio.OUTPUT})
+const Motor2B = new Gpio(24, {mode: Gpio.OUTPUT})
+const Motor3A = new Gpio(16, {mode: Gpio.OUTPUT})
+const Motor3B = new Gpio(26, {mode: Gpio.OUTPUT})
+const Motor4A = new Gpio(5, {mode: Gpio.OUTPUT})
+const Motor4B = new Gpio(6, {mode: Gpio.OUTPUT})
 
+const ServoTopYellow = new Gpio(18,  {mode: Gpio.OUTPUT})
+const ServoBottomYellow = new Gpio(22,  {mode: Gpio.OUTPUT})
 
 io.on('connection', (socket)=>{
     socket.on("disconnect",()=>{
-    Motor1A.unexport()
-    Motor1B.unexport()
-    Motor2A.unexport()
-    Motor2B.unexport()
-    Motor3A.unexport()
-    Motor3B.unexport()
-    Motor4A.unexport()
-    Motor4B.unexport()
+    
     })
     socket.on('car',(direction, active)=>{
         console.log("Direction " + direction+ "; Active : " + (active+"").toUpperCase())
         switch(direction){
             case "forward":
-                Motor1A.writeSync(1)
-                Motor1B.writeSync(0)
-                Motor2A.writeSync(1)
-                Motor2B.writeSync(0)
-                Motor3A.writeSync(1)
-                Motor3B.writeSync(0)
-                Motor4A.writeSync(1)
-                Motor4B.writeSync(0)
+                Motor1A.digitalWrite(0)
+                Motor1B.digitalWrite(1)
+                Motor2A.digitalWrite(0)
+                Motor2B.digitalWrite(1)
+                Motor3A.digitalWrite(0)
+                Motor3B.digitalWrite(1)
+                Motor4A.digitalWrite(0)
+                Motor4B.digitalWrite(1)
                 break
             case "backward":
-                Motor1A.writeSync(0)
-                Motor1B.writeSync(1)
-                Motor2A.writeSync(0)
-                Motor2B.writeSync(1)
-                Motor3A.writeSync(0)
-                Motor3B.writeSync(1)
-                Motor4A.writeSync(0)
-                Motor4B.writeSync(1)
+                Motor1A.digitalWrite(1)
+                Motor1B.digitalWrite(0)
+                Motor2A.digitalWrite(1)
+                Motor2B.digitalWrite(0)
+                Motor3A.digitalWrite(1)
+                Motor3B.digitalWrite(0)
+                Motor4A.digitalWrite(1)
+                Motor4B.digitalWrite(0)
                 break
             case "left":
-                Motor1A.writeSync(0)
-                Motor1B.writeSync(1)
-                Motor2A.writeSync(0)
-                Motor2B.writeSync(1)
-                Motor3A.writeSync(1)
-                Motor3B.writeSync(0)
-                Motor4A.writeSync(1)
-                Motor4B.writeSync(0)
+                Motor1A.digitalWrite(0)
+                Motor1B.digitalWrite(1)
+                Motor2A.digitalWrite(0)
+                Motor2B.digitalWrite(1)
+                Motor3A.digitalWrite(1)
+                Motor3B.digitalWrite(0)
+                Motor4A.digitalWrite(1)
+                Motor4B.digitalWrite(0)
                 break
             case "right":
-                Motor1A.writeSync(1)
-                Motor1B.writeSync(0)
-                Motor2A.writeSync(1)
-                Motor2B.writeSync(0)
-                Motor3A.writeSync(0)
-                Motor3B.writeSync(1)
-                Motor4A.writeSync(0)
-                Motor4B.writeSync(1)
+                Motor1A.digitalWrite(1)
+                Motor1B.digitalWrite(0)
+                Motor2A.digitalWrite(1)
+                Motor2B.digitalWrite(0)
+                Motor3A.digitalWrite(0)
+                Motor3B.digitalWrite(1)
+                Motor4A.digitalWrite(0)
+                Motor4B.digitalWrite(1)
                 break
             case "idle":
                 if(active){
-                    Motor1A.writeSync(0)
-                    Motor1B.writeSync(0)
-                    Motor2A.writeSync(0)
-                    Motor2B.writeSync(0)
-                    Motor3A.writeSync(0)
-                    Motor3B.writeSync(0)
-                    Motor4A.writeSync(0)
-                    Motor4B.writeSync(0)
+                    Motor1A.digitalWrite(0)
+                    Motor1B.digitalWrite(0)
+                    Motor2A.digitalWrite(0)
+                    Motor2B.digitalWrite(0)
+                    Motor3A.digitalWrite(0)
+                    Motor3B.digitalWrite(0)
+                    Motor4A.digitalWrite(0)
+                    Motor4B.digitalWrite(0)
                 }
         }
     })
-    socket.on('camera',(direction)=>{
-        console.log("camera DIRECTION " + direction)
-        socket.broadcast.emit("cammmm")
-    })
+    socket.on('camera',(direction, active)=>{
+        console.log("Direction " + direction+ "; Active : " + (active+"").toUpperCase())
+        switch(direction){
+            case "up":
+                let pulseWidth = 1000
+                let rand = Math.floor(Math.random() * 2000) + 1000
+                ServoTopYellow.servoWrite(rand)
+                break
+            case "down":
+                console.log("down camera")
+                break
+            case "left":
+                console.log("left camera")
+                break
+            case "right":
+                console.log("right camera")
+                break
+            case "idle":
+                if(active){
+                    console.log("idle active")
+                }
+        }
+    })  
 })
 
 
