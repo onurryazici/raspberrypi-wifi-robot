@@ -29,7 +29,7 @@ const Motor3B = new Gpio(26, {mode: Gpio.OUTPUT})
 const Motor4A = new Gpio(5, {mode: Gpio.OUTPUT})
 const Motor4B = new Gpio(6, {mode: Gpio.OUTPUT})
 
-const ServoTop = new Gpio(10,  {modxe: Gpio.OUTPUT})
+const ServoTop = new Gpio(10,  {mode: Gpio.OUTPUT})
 const ServoBottom = new Gpio(9,  {mode: Gpio.OUTPUT})
 
 io.on('connection', (socket)=>{
@@ -93,18 +93,15 @@ io.on('connection', (socket)=>{
         }
     })
     socket.on('camera',(direction, active)=>{
-        console.log("ServoTop pwm range " + ServoTop.getPwmRange())
-        console.log("ServoTop pwm dutycycle " + ServoTop.getPwmDutyCycle())
-        console.log("ServoTop pwm real range " + ServoTop.getPwmRealRange())
 
         console.log("Direction " + direction+ "; Active : " + (active+"").toUpperCase())
-        let pulseWidth = 1000;
-        let increment = 100;
+        let bottomPulseWidth = 1500;
+        let bottomIncrement = 100;
         switch(direction){
             case "up":
                 setInterval(() => {
                     ServoTop.servoWrite(pulseWidth);
-                    
+                    ServoBottom.duty
                     pulseWidth += increment;
                     if (pulseWidth >= 2000) {
                       increment = -100;
@@ -126,28 +123,28 @@ io.on('connection', (socket)=>{
                   }, 1000);
                 break
             case "left":
-                setInterval(() => {
-                    ServoBottom.servoWrite(pulseWidth);
-                  
-                    pulseWidth += increment;
-                    if (pulseWidth >= 2000) {
-                      increment = -100;
-                    } else if (pulseWidth <= 1000) {
-                      increment = 100;
-                    }
-                  }, 1000);
+              	bottomIncrement = -100
+              	var bottomLeftInterval = setInterval(()=>{
+					if(direction==="left" && active && pulseWidth >= 1000 && pulseWidth <= 1500){
+						ServoBottom.servoWrite(pulseWidth);
+						pulseWidth += increment;
+
+						if(pulseWidth <=1000)
+							clearInterval(bottomLeftInterval)
+					}
+              },1000)
                 break
             case "right":
-                setInterval(() => {
-                    ServoBottom.servoWrite(pulseWidth);
-                  
-                    pulseWidth += increment;
-                    if (pulseWidth >= 2000) {
-                      increment = -100;
-                    } else if (pulseWidth <= 1000) {
-                      increment = 100;
-                    }
-                  }, 1000);
+				bottomIncrement = 100
+              	var bottomRightInterval = setInterval(()=>{
+					if(direction==="right" && active && pulseWidth >= 1500 && pulseWidth <=2000){
+						ServoBottom.servoWrite(pulseWidth);
+						pulseWidth += increment;
+
+						if(pulseWidth >=2000)
+							clearInterval(bottomRightInterval)
+					}
+              },1000)
                 break
             case "idle":
                 if(active){
