@@ -127,7 +127,7 @@ io.on('connection', (socket)=>{
               	var bottomLeftInterval = setInterval(()=>{
 					if(direction==="left" && active && bottomPulseWidth >= 1000 && bottomPulseWidth <= 1500){
 						ServoBottom.servoWrite(bottomPulseWidth);
-						bottomPulseWidth += increment;
+						bottomPulseWidth += bottomIncrement;
 
 						if(bottomPulseWidth <=1000)
 							clearInterval(bottomLeftInterval)
@@ -139,7 +139,7 @@ io.on('connection', (socket)=>{
               	var bottomRightInterval = setInterval(()=>{
 					if(direction==="right" && active && bottomPulseWidth >= 1500 && bottomPulseWidth <=2000){
 						ServoBottom.servoWrite(bottomPulseWidth);
-						bottomPulseWidth += increment;
+						bottomPulseWidth += bottomIncrement;
 
 						if(bottomPulseWidth >=2000)
 							clearInterval(bottomRightInterval)
