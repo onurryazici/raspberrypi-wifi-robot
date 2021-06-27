@@ -125,11 +125,11 @@ io.on('connection', (socket)=>{
             case "left":
               	bottomIncrement = -100
               	var bottomLeftInterval = setInterval(()=>{
-					if(direction==="left" && active && pulseWidth >= 1000 && pulseWidth <= 1500){
-						ServoBottom.servoWrite(pulseWidth);
-						pulseWidth += increment;
+					if(direction==="left" && active && bottomPulseWidth >= 1000 && bottomPulseWidth <= 1500){
+						ServoBottom.servoWrite(bottomPulseWidth);
+						bottomPulseWidth += increment;
 
-						if(pulseWidth <=1000)
+						if(bottomPulseWidth <=1000)
 							clearInterval(bottomLeftInterval)
 					}
               },1000)
@@ -137,11 +137,11 @@ io.on('connection', (socket)=>{
             case "right":
 				bottomIncrement = 100
               	var bottomRightInterval = setInterval(()=>{
-					if(direction==="right" && active && pulseWidth >= 1500 && pulseWidth <=2000){
-						ServoBottom.servoWrite(pulseWidth);
-						pulseWidth += increment;
+					if(direction==="right" && active && bottomPulseWidth >= 1500 && bottomPulseWidth <=2000){
+						ServoBottom.servoWrite(bottomPulseWidth);
+						bottomPulseWidth += increment;
 
-						if(pulseWidth >=2000)
+						if(bottomPulseWidth >=2000)
 							clearInterval(bottomRightInterval)
 					}
               },1000)
