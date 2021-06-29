@@ -93,58 +93,45 @@ io.on('connection', (socket)=>{
         }
     })
     socket.on('camera',(direction, active)=>{
-
         console.log("Direction " + direction+ "; Active : " + (active+"").toUpperCase())
+        if(!active){
+            ServoBottom.servoWrite(0)
+            ServoTop.servoWrite(0)
+        }
         let bottomPulseWidth = 1500;
-        let bottomIncrement = 100;
+        let topPulseWidth = 1500
         switch(direction){
             case "up":
-                setInterval(() => {
-                    ServoTop.servoWrite(pulseWidth);
-                    ServoBottom.duty
-                    pulseWidth += increment;
-                    if (pulseWidth >= 2000) {
-                      increment = -100;
-                    } else if (pulseWidth <= 1000) {
-                      increment = 100;
-                    }
-                  }, 1000);
+                
                 break
             case "down":
-                setInterval(() => {
-                    ServoTop.servoWrite(pulseWidth);
-                  
-                    pulseWidth -= increment;
-                    if (pulseWidth >= 2000) {
-                      increment = -100;
-                    } else if (pulseWidth <= 1000) {
-                      increment = 100;
-                    }
-                  }, 1000);
+                if(direction==="down" && active){
+                    
+                }
                 break
             case "left":
-              	bottomIncrement = -100
-              	var bottomLeftInterval = setInterval(()=>{
-					if(direction==="left" && active && bottomPulseWidth >= 1000 && bottomPulseWidth <= 1500){
-						ServoBottom.servoWrite(bottomPulseWidth);
-						bottomPulseWidth += bottomIncrement;
-
-						if(bottomPulseWidth <=1000)
-							clearInterval(bottomLeftInterval)
+					if(direction==="left" && active){
+                        if(bottomPulseWidth>1200){
+                            bottomPulseWidth -= 300
+						    ServoBottom.servoWrite(bottomPulseWidth);                   
+                        }
+                        else{
+                            bottomPulseWidth = 1500
+                            ServoBottom.servoWrite(bottomPulseWidth)
+                        }
 					}
-              },1000)
                 break
             case "right":
-				bottomIncrement = 100
-              	var bottomRightInterval = setInterval(()=>{
-					if(direction==="right" && active && bottomPulseWidth >= 1500 && bottomPulseWidth <=2000){
-						ServoBottom.servoWrite(bottomPulseWidth);
-						bottomPulseWidth += bottomIncrement;
-
-						if(bottomPulseWidth >=2000)
-							clearInterval(bottomRightInterval)
-					}
-              },1000)
+				if(direction==="right" && active){
+                    if(bottomPulseWidth < 1800){
+                        bottomPulseWidth += 300
+                        ServoBottom.servoWrite(bottomPulseWidth);                   
+                    }
+                    else{
+                        bottomPulseWidth=1500
+                        ServoBottom.servoWrite(1500)
+                    }
+                }
                 break
             case "idle":
                 if(active){
