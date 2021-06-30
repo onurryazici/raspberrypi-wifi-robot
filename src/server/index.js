@@ -30,14 +30,15 @@ const Motor4A = new Gpio(5, {mode: Gpio.OUTPUT})
 const Motor4B = new Gpio(6, {mode: Gpio.OUTPUT})
 
 const ServoTop = new Gpio(10,  {mode: Gpio.OUTPUT})
-const ServoBottom = new Gpio(9,  {mode: Gpio.OUTPUT})
-
+const ServoBottom = new Gpio(12,  {mode: Gpio.OUTPUT})
+var bottomPulseWidth = 1500;
+var topPulseWidth = 1300
 io.on('connection', (socket)=>{
     socket.on("disconnect",()=>{
     
     })
     socket.on('car',(direction, active)=>{
-        console.log("Direction " + direction+ "; Active : " + (active+"").toUpperCase())
+        console.log("Car Direction " + direction+ "; Active : " + (active+"").toUpperCase())
         switch(direction){
             case "forward":
                 Motor1A.digitalWrite(0)
@@ -93,43 +94,58 @@ io.on('connection', (socket)=>{
         }
     })
     socket.on('camera',(direction, active)=>{
-        console.log("Direction " + direction+ "; Active : " + (active+"").toUpperCase())
+        console.log("Camera Direction " + direction+ "; Active : " + (active+"").toUpperCase())
         if(!active){
             ServoBottom.servoWrite(0)
             ServoTop.servoWrite(0)
         }
-        let bottomPulseWidth = 1500;
-        let topPulseWidth = 1500
+        
         switch(direction){
             case "up":
-                
+                if(direction==="up" && active){
+                    if(topPulseWidth>900){
+                        topPulseWidth -= 300
+                        ServoTop.servoWrite(topPulseWidth)
+                    }
+                    else{
+                        //topPulseWidth = 1500
+                        //ServoTop.servoWrite(topPulseWidth)
+                    }
+                }
                 break
             case "down":
                 if(direction==="down" && active){
-                    
+                    if(topPulseWidth<1800){
+                        topPulseWidth += 300
+                        ServoTop.servoWrite(topPulseWidth)
+                    }
+                    else{
+                        //topPulseWidth = 1500
+                        //ServoTop.servoWrite(topPulseWidth)
+                    }
                 }
                 break
             case "left":
 					if(direction==="left" && active){
-                        if(bottomPulseWidth>1200){
-                            bottomPulseWidth -= 300
-						    ServoBottom.servoWrite(bottomPulseWidth);                   
+                        if(bottomPulseWidth < 1800){
+                            bottomPulseWidth += 300
+                            ServoBottom.servoWrite(bottomPulseWidth);                   
                         }
                         else{
-                            bottomPulseWidth = 1500
-                            ServoBottom.servoWrite(bottomPulseWidth)
+                            bottomPulseWidth=1500
+                            ServoBottom.servoWrite(1500)
                         }
 					}
                 break
             case "right":
 				if(direction==="right" && active){
-                    if(bottomPulseWidth < 1800){
-                        bottomPulseWidth += 300
+                    if(bottomPulseWidth>1200){
+                        bottomPulseWidth -= 300
                         ServoBottom.servoWrite(bottomPulseWidth);                   
                     }
                     else{
-                        bottomPulseWidth=1500
-                        ServoBottom.servoWrite(1500)
+                        bottomPulseWidth = 1500
+                        ServoBottom.servoWrite(bottomPulseWidth)
                     }
                 }
                 break
