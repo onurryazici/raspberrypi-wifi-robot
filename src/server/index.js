@@ -49,6 +49,7 @@ io.on('connection', (socket)=>{
                 Motor3B.digitalWrite(1)
                 Motor4A.digitalWrite(0)
                 Motor4B.digitalWrite(1)
+                socket.broadcast.emit("going_forward")
                 break
             case "backward":
                 Motor1A.digitalWrite(1)
@@ -59,6 +60,7 @@ io.on('connection', (socket)=>{
                 Motor3B.digitalWrite(0)
                 Motor4A.digitalWrite(1)
                 Motor4B.digitalWrite(0)
+                socket.broadcast.emit("going_backward")
                 break
             case "left":
                 Motor1A.digitalWrite(0)
@@ -69,6 +71,7 @@ io.on('connection', (socket)=>{
                 Motor3B.digitalWrite(0)
                 Motor4A.digitalWrite(1)
                 Motor4B.digitalWrite(0)
+                socket.broadcast.emit("going_left")
                 break
             case "right":
                 Motor1A.digitalWrite(1)
@@ -79,6 +82,7 @@ io.on('connection', (socket)=>{
                 Motor3B.digitalWrite(1)
                 Motor4A.digitalWrite(0)
                 Motor4B.digitalWrite(1)
+                socket.broadcast.emit("going_right")
                 break
             case "idle":
                 if(active){
@@ -90,6 +94,7 @@ io.on('connection', (socket)=>{
                     Motor3B.digitalWrite(0)
                     Motor4A.digitalWrite(0)
                     Motor4B.digitalWrite(0)
+                    socket.broadcast.emit("car_idle")
                 }
         }
     })
@@ -111,6 +116,7 @@ io.on('connection', (socket)=>{
                         //topPulseWidth = 1500
                         //ServoTop.servoWrite(topPulseWidth)
                     }
+                    socket.broadcast.emit("turning_up")
                 }
                 break
             case "down":
@@ -123,6 +129,7 @@ io.on('connection', (socket)=>{
                         //topPulseWidth = 1500
                         //ServoTop.servoWrite(topPulseWidth)
                     }
+                    socket.broadcast.emit("turning_down")
                 }
                 break
             case "left":
@@ -135,6 +142,7 @@ io.on('connection', (socket)=>{
                             bottomPulseWidth=1500
                             ServoBottom.servoWrite(1500)
                         }
+                        socket.broadcast.emit("turning_left")
 					}
                 break
             case "right":
@@ -147,11 +155,13 @@ io.on('connection', (socket)=>{
                         bottomPulseWidth = 1500
                         ServoBottom.servoWrite(bottomPulseWidth)
                     }
+                    socket.broadcast.emit("turning_right")
                 }
                 break
             case "idle":
                 if(active){
                     console.log("idle active")
+                    socket.broadcast.emit("camera_idle")
                 }
         }
     })  
@@ -159,4 +169,8 @@ io.on('connection', (socket)=>{
 
 
 server.listen(3030); //listen to port 8080
+<<<<<<< HEAD
 app.use(express.static(webroot));
+=======
+app.use(express.static(webroot));
+>>>>>>> e1d113a47f63fcfdec1fc660349b2f548df0f54a
