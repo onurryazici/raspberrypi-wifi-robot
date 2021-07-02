@@ -158,5 +158,5 @@ io.on('connection', (socket)=>{
 })
 
 
-server.listen(8080); //listen to port 8080
+server.listen(3030); //listen to port 8080
 app.use(express.static(webroot));
