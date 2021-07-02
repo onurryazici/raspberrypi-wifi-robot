@@ -3,7 +3,9 @@ import { Grid, Paper, Box } from '@material-ui/core'
 import CarControlUnit from './components/carControlUnit'
 import CameraControlUnit from './components/cameraControlUnit'
 import MySocket from './socket'
-import LogUnit from './components/logUnit'
+import CameraLog from './components/cameraLog'
+import CameraControlLog from './components/cameraControlLog'
+import CarControlLog from './components/carControlLog'
 import styles from './styles.module.css'
 import { withStyles } from "@material-ui/core/styles"
 import { FiberManualRecord } from '@material-ui/icons/'
@@ -20,7 +22,7 @@ const useStyles = ((theme) => ({
       textAlign: 'center',
       color: theme.palette.text.secondary,
       background:'black',
-      height: '100%'
+      height: '100%',
     },
   }));
 
@@ -124,29 +126,38 @@ class App extends Component {
             <Grid container spacing={3} style={{height:'100%'}}>
                 <Grid item xs>
                     <Paper className={classes.paper}>
+                    <Box flexWrap="wrap">
                         <CarControlUnit 
-                            w = { this.state.goingForward }
-                            a = { this.state.goingLeft }
-                            s = { this.state.goingBackward }
-                            d = { this.state.goingRight } 
-                            idle = {!this.state.goingForward && !this.state.goingLeft && !this.state.goingRight && !this.state.goingBackward}/>  
+                                w = { this.state.goingForward }
+                                a = { this.state.goingLeft }
+                                s = { this.state.goingBackward }
+                                d = { this.state.goingRight } 
+                                idle = {!this.state.goingForward && !this.state.goingLeft && !this.state.goingRight && !this.state.goingBackward}/>  
+                        <CarControlLog/> 
+                    </Box>
+                        
                     </Paper>
                 </Grid>
                 <Grid item xs={6}>
                     <Paper className={classes.paper}>
                     <Box flexWrap="wrap">
-                        <div id={styles.camera}><span id={styles.livebar}><FiberManualRecord style={{fill:'red'}}/> LIVE</span></div>
-                        <LogUnit/>
+                        <div id={styles.camera}><span id={styles.livebar}><FiberManualRecord style={{fill:'red'}}/> LIVE</span>
+                            <img src="http://192.168.1.175:8080?action=stream"/>
+                        </div>
+                        <CameraLog/>
                     </Box>
                     </Paper>
                 </Grid>
                 <Grid item xs>
                 <Paper className={classes.paper}>
-                    <CameraControlUnit
-                        up    = { this.state.cameraUp }
-                        down  = { this.state.cameraDown }
-                        left  = { this.state.cameraLeft }
-                        right = { this.state.cameraRight } />
+                    <Box flexWrap="wrap">
+                        <CameraControlUnit
+                            up    = { this.state.cameraUp }
+                            down  = { this.state.cameraDown }
+                            left  = { this.state.cameraLeft }
+                            right = { this.state.cameraRight } />
+                        <CameraControlLog/>
+                    </Box>
                 </Paper>
                 </Grid>
             </Grid>
