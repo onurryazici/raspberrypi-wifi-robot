@@ -1,14 +1,22 @@
 
 # RaspberryPi Wifi Robot
 
-  In this tutorial we created simple ui and how to control our raspberry pi dc motors and servos with React and SocketIO.   
+  In this tutorial we created simple ui and learned how to control our raspberry pi dc motors and servos with React and SocketIO.   
 
-# Demo
-A simple scene is given in the picture below . This scene has includes two objects. These objects are grid and cube. For learn to threejs this can be first :-)
+# Clone and install
 
-  ![enter image description here](https://github.com/onurryazici/threejs-introduction/blob/main/screenshots/scr1.png)
+`git clone https://github.com/onurryazici/raspberrypi-wifi-robot`\
+\
+`cd PROJECT_LOCATION/ && npm i`
 
-# Running project
+# Demo, test
 
-Clone this repo : 
-`git clone https://www.github.com/onurryazici/threejs-introduction.git`
+`cd PROJECT_LOCATION/ && npm start`\
+\
+`cd PROJECT_LOCATION/src/server && node index.js`
+
+
+
+
+
+
