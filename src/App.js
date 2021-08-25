@@ -142,7 +142,7 @@ class App extends Component {
                     <Paper className={classes.paper}>
                     <Box flexWrap="wrap">
                         <div id={styles.camera}><span id={styles.livebar}><FiberManualRecord style={{fill:'red'}}/> LIVE</span>
-                            <img src="http://192.168.1.175:8080?action=stream"/>
+                            <img src="http://192.168.1.175:8080?action=stream" style={{width:'100%',height:'100%',position:'relative',top:'-27px'}}/>
                         </div>
                         <CameraLog/>
                     </Box>
