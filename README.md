@@ -11,6 +11,8 @@
 
 # Demo, test
 
+![enter image description here](https://github.com/onurryazici/raspberrypi-wifi-robot/blob/main/screenshots/scr1.png)
+
 `cd PROJECT_LOCATION/ && npm start`\
 \
 `cd PROJECT_LOCATION/src/server && node index.js`
