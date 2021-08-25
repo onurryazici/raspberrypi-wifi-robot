@@ -9,7 +9,7 @@ export default class CarControlLog extends Component {
             const { currentTarget:target } = event
             target.scroll({top:target.scrollHeight, behavior:'smooth'})
         })
-    }
+    } 
     render() {
         return (
             <React.Fragment>
