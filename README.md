@@ -9,13 +9,13 @@
 \
 `cd PROJECT_LOCATION/ && npm i`
 
-# Demo, test
+# Demo
 
 ![enter image description here](https://github.com/onurryazici/raspberrypi-wifi-robot/blob/main/screenshots/scr1.png)
 
-`cd PROJECT_LOCATION/ && npm start`\
+Start ui : `cd PROJECT_LOCATION/ && npm start`\
 \
-`cd PROJECT_LOCATION/src/server && node index.js`
+Start backend : `cd PROJECT_LOCATION/src/server && node index.js`
 
 
 
