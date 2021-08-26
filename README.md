@@ -33,7 +33,7 @@ SOFTWARE.
 
 # Demo
 
-![enter image description here](https://github.com/onurryazici/raspberrypi-wifi-robot/blob/main/screenshots/scr1.gif)
+![enter image description here](https://github.com/onurryazici/raspberrypi-wifi-robot/blob/main/screenshots/scr1_gif.gif)
 
 Start ui : `cd PROJECT_LOCATION/ && npm start`\
 \
