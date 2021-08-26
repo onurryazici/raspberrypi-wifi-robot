@@ -1,6 +1,6 @@
 import  io  from "socket.io-client"
-const URL    = "http://192.168.1.175:3030"; // ##
-const MySocket =  io(URL, { autoConnect:false, query:{token:"token gelecek buraya"} })
+const URL    = "http://192.168.1.175:3030"; // ## Your localhost [CHANGE]
+const MySocket =  io(URL, { autoConnect:false, query:{token:"IF YOU WANT YOUR TOKEN WILL BE HERE"} })
 //const MySocket = io(URL, { autoConnect:false, query:{token:"tester"} });
 
 MySocket.onAny((event, ...args) => {
